@@ -3,9 +3,388 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>likely-sparrow</title>
+  <title>likely-sparrow — Warm, minimal landing</title>
+  <meta name="description" content="A simple, tasteful landing page for likely-sparrow." />
+  <style>
+    :root{
+      --bg: #12070a;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.88);
+      --muted: rgba(255,255,255,0.62);
+      --hairline: rgba(255,255,255,0.10);
+      --accent: #ff8a8a;
+      --accent-2: #ffb26a;
+      --shadow: 0 24px 60px rgba(0,0,0,0.45);
+      --radius: 16px;
+      --max: 1080px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(255,138,138,0.22), transparent 60%),
+                  radial-gradient(900px 600px at 85% 25%, rgba(255,178,106,0.18), transparent 55%),
+                  radial-gradient(900px 600px at 50% 100%, rgba(255,255,255,0.06), transparent 55%),
+                  var(--bg);
+      letter-spacing: -0.01em;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 22px 44px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding: 10px 0 22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+
+    .mark{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(255,138,138,0.92), rgba(255,178,106,0.86));
+      box-shadow: 0 12px 26px rgba(0,0,0,0.28);
+    }
+
+    .brand strong{
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    nav a{
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    nav a:hover{
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.82);
+    }
+
+    .cta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--hairline);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.84);
+      font-size: 14px;
+      font-weight: 560;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn:hover{
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-1px);
+    }
+
+    .btn.primary{
+      border: 1px solid rgba(255,138,138,0.28);
+      background: linear-gradient(135deg, rgba(255,138,138,0.18), rgba(255,178,106,0.14));
+    }
+
+    .btn.primary:hover{
+      border-color: rgba(255,138,138,0.42);
+      background: linear-gradient(135deg, rgba(255,138,138,0.24), rgba(255,178,106,0.18));
+    }
+
+    .hero{
+      margin-top: 8px;
+      border: 1px solid var(--hairline);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(600px 260px at 25% 20%, rgba(255,138,138,0.22), transparent 60%),
+        radial-gradient(520px 260px at 78% 35%, rgba(255,178,106,0.16), transparent 60%);
+      opacity: 0.85;
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position: relative;
+      padding: 54px 40px 30px;
+      display:grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    h1{
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+    }
+
+    .sub{
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 56ch;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      margin-bottom: 10px;
+    }
+
+    .note{
+      margin: 8px 0 0;
+      color: rgba(255,255,255,0.50);
+      font-size: 13px;
+    }
+
+    .side{
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 26px;
+      margin-left: 6px;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+      color: rgba(255,255,255,0.70);
+      font-size: 13px;
+    }
+
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 3px rgba(255,138,138,0.14);
+    }
+
+    .stats{
+      margin-top: 16px;
+      display:grid;
+      gap: 12px;
+    }
+
+    .stat{
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .stat .k{
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 6px;
+    }
+
+    .stat .v{
+      font-size: 14px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.35;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 18px 22px 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.08);
+    }
+
+    .card{
+      padding: 16px 16px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      min-height: 110px;
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .card p{
+      margin: 0;
+      color: rgba(255,255,255,0.62);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    footer{
+      margin-top: 26px;
+      display:flex;
+      justify-content:space-between;
+      gap: 14px;
+      color: rgba(255,255,255,0.45);
+      font-size: 13px;
+      padding: 4px 2px;
+    }
+
+    .foot-links{ display:flex; gap: 14px; }
+    .foot-links a{ color: rgba(255,255,255,0.55); }
+    .foot-links a:hover{ color: rgba(255,255,255,0.78); }
+
+    /* Responsive */
+    @media (max-width: 880px){
+      nav{ display:none; }
+      .hero-inner{ grid-template-columns: 1fr; padding: 44px 22px 22px; }
+      .side{ border-left: 0; padding-left: 0; margin-left: 0; }
+      .features{ grid-template-columns: 1fr; }
+      header{ padding-bottom: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition: none; }
+    }
+  </style>
 </head>
-<body style="margin:0;display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui,sans-serif;background:#fafafa;color:#888">
-  <h1 style="font-size:3rem">empty index.html</h1>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <strong>likely-sparrow</strong>
+          <div style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.2;">A warm, minimal starting point</div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="cta">
+        <a class="btn" href="#contact">Get in touch</a>
+        <a class="btn primary" href="#features">Explore</a>
+      </div>
+    </header>
+
+    <main class="hero" id="about">
+      <div class="hero-inner">
+        <section>
+          <div class="pill"><span class="dot" aria-hidden="true"></span><span>Warm, minimal landing</span></div>
+          <h1>Make your first impression feel warm, focused, and premium.</h1>
+          <p class="sub">
+            A simple, elegant landing page—clean typography, subtle depth, and a focused call to action.
+            Designed to be easy to extend as your project grows.
+          </p>
+
+          <div class="actions">
+            <a class="btn primary" href="#contact">Start a conversation</a>
+            <a class="btn" href="#features">See what’s included</a>
+          </div>
+
+          <p class="note">No frameworks. Just HTML + CSS. Fast, responsive, and easy to edit.</p>
+        </section>
+
+        <aside class="side" aria-label="Highlights">
+          <div class="stats">
+            <div class="stat">
+              <div class="k">Design</div>
+              <div class="v">Soft gradients, subtle borders, and generous spacing.</div>
+            </div>
+            <div class="stat">
+              <div class="k">Performance</div>
+              <div class="v">Lightweight by default—ideal for static hosting.</div>
+            </div>
+            <div class="stat">
+              <div class="k">Extensible</div>
+              <div class="v">Add sections, images, pricing, or docs when you’re ready.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section class="features" id="features">
+        <div class="card">
+          <h3>Elegant foundation</h3>
+          <p>Thoughtful layout and type scale, with a tasteful visual rhythm.</p>
+        </div>
+        <div class="card">
+          <h3>Responsive by design</h3>
+          <p>Adapts cleanly for smaller screens without feeling cramped.</p>
+        </div>
+        <div class="card">
+          <h3>Clear next step</h3>
+          <p>A focused CTA that invites action without shouting.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <div>© <span id="y">2026</span> likely-sparrow</div>
+      <div class="foot-links">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Keep the footer year current (nice touch for a static site)
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
